@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - dev
-    path:
+    paths:
       - 'packages/container/**'
-  workflow_dispatch:
 
 defaults:
   run:
