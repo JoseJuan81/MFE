@@ -4,23 +4,22 @@ const ModuleFederationWebpackPlugin = require('webpack/lib/container/ModuleFeder
 const common = require('./webpack.common');
 const packageJson = require('../package.json');
 
-const devConfig = {
-    mode: 'development',
-    devServer: {
-        port: 8080,
-        historyApiFallback: {
-            index: 'index.html'
-        }
+const domain = process.env.PRODUCTION_DOMAIN
+
+const prodConfig = {
+    mode: 'production',
+    output: {
+        filename: '[name].[contenthash].js'
     },
     plugins: [
         new ModuleFederationWebpackPlugin({
             name: 'container',
             remotes: {
-                marketingModule: 'sharingMarketingModule@http://localhost:8081/remoteEntry.js'
-            }     ,
+                marketingModule: `sharingMarketingModule@${ domain }/marketing/remoteEntry.js`
+            },
             shared: packageJson.dependencies
         }),
     ]
 }
 
-module.exports = merge( common, devConfig );
+module.exports = merge( common, prodConfig );

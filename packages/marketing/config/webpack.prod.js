@@ -4,13 +4,10 @@ const ModuleFederationWebpackPlugin = require('webpack/lib/container/ModuleFeder
 const common = require('./webpack.common');
 const packageJson = require('../package.json');
 
-const devConfig = {
-    mode: 'development',
-    devServer: {
-        port: 8081,
-        historyApiFallback: {
-            index: 'index.html'
-        }
+const prodConfig = {
+    mode: 'production',
+    output: {
+        filename: '[name].[contenthash].js'
     },
     plugins: [
         new ModuleFederationWebpackPlugin({
@@ -24,4 +21,4 @@ const devConfig = {
     ]
 }
 
-module.exports = merge( common, devConfig );
+module.exports = merge( common, prodConfig );
